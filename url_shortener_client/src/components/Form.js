@@ -17,7 +17,7 @@ class Form extends React.Component {
             loading: false,
             errors: [],
             errorMessage: {},
-            toolTipMessage: 'Copy To Clip Board'
+            toolTipMessage: 'Skopíruj'
         };
     }
 
@@ -78,16 +78,17 @@ class Form extends React.Component {
         }))
     }
 
+    // funkcia validacie zadanych dat
     validateInput = async () => {
         var errors = [];
         var errorMessages = this.state.errorMessage;
 
         if (this.state.longURL.length === 0) {
             errors.push("longURL");
-            errorMessages['longURL'] = 'Please enter your URL!';
+            errorMessages['longURL'] = 'Prosím, sem vložte URL adresu!';
         } else if (!isWebUri(this.state.longURL)) {
             errors.push("longURL");
-            errorMessages['longURL'] = 'Please enter your URL in a form of https://www...';
+            errorMessages['longURL'] = 'Prosím vložte URL adresu vo forme https://www...';
         }
 
         if (this.state.preferedAlias !== '') {
@@ -96,7 +97,7 @@ class Form extends React.Component {
                 errorMessages['suggestedAlias'] = 'Please enter an alias less than 7 characters long.';
             } else if (this.state.preferedAlias.indexOf(' ') >= 0) {
                 errors.push("suggestedAlias");
-                errorMessages['suggestedAlias'] = 'Spaces are not allowed in URLs.';
+                errorMessages['suggestedAlias'] = 'Medzery nie sú dovolené v URL adresách.';
             }
 
             var keyExists = await this.checkKeyExists();
@@ -137,10 +138,10 @@ class Form extends React.Component {
         return (
             <div className="containter">
                 <form autoComplete="off">
-                    <h3>Skrateny link</h3>
+                    <h3>Skráť link</h3>
 
                     <div className="form-group">
-                        <label>Vloz URL</label>
+                        <label>Vložte URL <font color='red'>*</font></label>
                         <input
                             id="longURL"
                             onChange={this.handleChange}
@@ -164,7 +165,7 @@ class Form extends React.Component {
                     </div>
 
                     <div className="form-group">
-                        <label htmlFor="basic-url">Tvoj skrateny link</label>
+                        <label htmlFor="basic-url">Tvoj skrátený link</label>
                         <div className="input-group mb-3">
                             <div className="input-group-prepend">
                                 <span className="input-group-text">kratkelinky.com/</span>
@@ -199,7 +200,7 @@ class Form extends React.Component {
                             </div> :
                             <div>
                                 <span className="visually-hidden spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
-                                <span>Skrat link</span>
+                                <span>Skráť link</span>
                             </div>
                         }
                     </button>
